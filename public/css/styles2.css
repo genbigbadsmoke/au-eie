@@ -1,0 +1,72 @@
+.navbar-light .navbar-nav .nav-link {
+    color: #000;
+}
+
+body {
+    background: #1ca04e;
+}
+
+#box {
+    position: relative;
+    margin-top: 100px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #1ca04e;
+}
+
+.profile-button {
+    background: #1ca04e;
+    box-shadow: none;
+    border: none;
+}
+
+.profile-button:hover {
+    background: #1ca04e;
+}
+
+.profile-button:focus {
+    background: #1ca04e;
+    box-shadow: none;
+}
+
+.profile-button:active {
+    background: #1ca04e;
+    box-shadow: none;
+}
+
+.back:hover {
+    color: #1ca04e;
+    cursor: pointer;
+}
+
+.labels {
+    font-size: 11px;
+}
+
+.add-experience:hover {
+    background: #1ca04e;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #1ca04e;
+}
+
+.ol-p {
+    align-items: center;
+    margin-top: -23.5px;
+    margin-left: 100px;
+}
+
+.ol-p2 {
+    align-items: center;
+    margin-top: -40.5px;
+    margin-left: 300px;
+}
+
+.resimg {
+    margin-left: 10px;
+    width: 150px;
+    height: 150px;
+
+}

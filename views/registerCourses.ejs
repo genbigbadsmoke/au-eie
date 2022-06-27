@@ -1,0 +1,44 @@
+<%- include('partials/header2') %>
+
+
+
+<div class="container rounded bg-white mt-5 mb-5" id="box">
+  <div class="row">
+      <div class="col-md-3 border-right">
+          <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+      </div>
+      <div class="col-md-7 border-right">
+          <div class="p-3 py-5">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="text-right">Register Courses</h4>
+              </div>
+              <div class="row mt-2">
+                <ol>
+                    <%for (let i = 0; i < courseReg.length; i++){%>
+                        <li><%= courseReg[i].code %><p class="ol-p"><%= courseReg[i].title %></p><p class="ol-p2"><%= courseReg[i].unit %></p></li>
+                    <%}%>
+                </ol>
+              </div>
+              <form action="/registerCourses" method="POST">
+                <div class="row mt-2">
+                    <label class="labels">Matric Number</label>
+                    <input type="text" class="form-control" placeholder="Matric Number" name="matricNumber" value="">
+                    <div class="col-md-2"><label class="labels">Course Code</label><input type="text" class="form-control" placeholder="Course Code" name="courseCode" value=""></div>
+                    <div class="col-md-7"><label class="labels">Course Title</label><input type="text" class="form-control" placeholder="Course Title" name="courseTitle" value=""></div>
+                    <div class="col-md-3"><label class="labels">Unit</label><input type="text" class="form-control" value="" placeholder="Unit" name="courseUnit"></div>
+                </div>
+                
+                  <div class="row mt-2">
+                      <div class="col-md-3 mx-auto">
+                          <button class="btn btn-primary profile-button" type="submit">  +  </button>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+
+<%- include('partials/footer') %>
