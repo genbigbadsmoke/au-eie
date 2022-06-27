@@ -77,7 +77,7 @@ app.get("/editProfile", (req, res) => {
   
 app.get("/registerCourses", (req, res) => {
   Student.find({}, (err, foundStudent) => {
-    res.render("registerCourses", {courseRegistered: courseReg});
+    res.render("registerCourses", {courseReg: courseReg});
   })
 });
 app.post('/registerCourses', (req, res) => {
@@ -95,18 +95,13 @@ app.post('/registerCourses', (req, res) => {
         }
       })
     }
-  })
-  if (matricNumber === Student.matricNumber) {
-    const courseReg = new CourseReg({
-      code: courseCode,
-      title: courseTitle,
-      unit: courseUnit
-    });
-    courseReg.save();
-  } else {
-    console.log('Error');
-  }
-  
+  });
+  const courseReg = new CourseReg({
+    code: courseCode,
+    title: courseTitle,
+    unit: courseUnit
+  });
+  courseReg.save();
 });
   
 app.get("/result1", (req, res) => {
@@ -127,4 +122,17 @@ app.post('/result1', (req, res) => {
 });
 app.get("/result2", (req, res) => {
   Result.find({}, (err, foundResult) => {
-    res.ren
+    res.render('result2', {resultItems: foundResult});
+  });
+});
+
+app.get("/courses", (req, res) => {
+  res.render("courses");
+});
+  
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
+
+module.exports = Routes;

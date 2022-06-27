@@ -37,7 +37,7 @@ const { actions } = require('admin-bro');
 //Admin Bro
 AdminBro.registerAdapter(AdminBroMongoose)
 const AdminBroOptions = {
-  resources: [User, Student],
+  resources: [User, Student, CourseReg],
   branding: {
     logo: '../images/new_logo-2.png',
     companyName: 'College Of Engineering Technology',

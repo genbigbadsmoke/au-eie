@@ -76,6 +76,6 @@ const Result = mongoose.model('Result', studentResultSchema);
 const ProfileImg = mongoose.model('ProfileImg', imageSchema);
 
 // Definables
-let courseReg = [Student.courseRegistered];
+let courseReg = [];
 
 module.exports = {Student, courseReg, CourseReg, Result, ProfileImg};
