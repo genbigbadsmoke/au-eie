@@ -8,7 +8,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const Routes = express();
 
 
-const {Student, courseReg, CourseReg, Result, DisplayImg} = require("../models/student");
+const {Student, courseReg, CourseReg, Result, image} = require("../models/student");
 const User = require("../models/user");
 
 //passport
@@ -23,7 +23,6 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + Date.now())
   }
 });
-
 const fileFilter=(req, file, cb)=>{
   if(file.mimetype ==='image/jpeg' || file.mimetype ==='image/jpg' || file.mimetype ==='image/png'){
       cb(null,true);
@@ -86,29 +85,34 @@ app.route('/editProfile')
     Student.find({}, () => {
       res.render("editProfile", {firstname: Student.firstname});
     })
-  }).post((req, res) => {
+  }).post(upload.single('profileImg'), (req, res) => {
     const matricNumber = req.body.matricNumber;
     const firstname = req.body.firstname;
     const middlename = req.body.middlename;
     const lastname = req.body.lastname;
     const dept = req.body.department;
 
-    if (req.file) {
-      const pathName = req.file.path;
-      console.log(pathname);
-
-      const displayImg = new DisplayImg({
-        matricNumber: matricNumber,
-        image: pathName
-      });
-    }
     Student.findOneAndUpdate({matricNumber: matricNumber}, {$push: {'firstname': firstname, 'middlename': middlename,'lastname': lastname, 'department': dept}}, {new: true}, (err, foundStudent) => {
       if (!err) {
         res.redirect('/portalHome');
       }
     });
-
-  });
+    let img = fs.readFileSync(req.file.path);
+    let encode_img = img.toString('base64');
+    let final_img = {
+      contentType: req.file.mimetype,
+      image: new Buffer(encode_img, 'base64')
+    };
+    image.create(final_img, (err, result) => {
+      if (!err) {
+        //console.log(result.img.Buffer);
+        console.log('Saved to database');
+        res.contentType(final_img.contentType);
+        res.send(final_img.image);
+      }
+    })
+  }
+);
 
 app.route('/registerCourses')
   .get((req, res) => {

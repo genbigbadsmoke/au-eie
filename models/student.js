@@ -7,7 +7,8 @@ const imgSchema = new mongoose.Schema({
     ref: 'Student'
   },
   image: {
-    type: String
+    data: Buffer,
+    contentType: String
   }
 });
 
@@ -78,9 +79,9 @@ StudentSchema.plugin(passportLocalMongoose);
 const Student = mongoose.model('Student', StudentSchema);
 const CourseReg = mongoose.model('CourseReg', studentCourseRegSchema);
 const Result = mongoose.model('Result', studentResultSchema);
-const DisplayImg = mongoose.model('DisplayImg', imgSchema);
+const image = mongoose.model('DisplayImg', imgSchema);
 
 // Definables
 let courseReg = [];
 
-module.exports = {Student, courseReg, CourseReg, Result, DisplayImg};
+module.exports = {Student, courseReg, CourseReg, Result, image};
