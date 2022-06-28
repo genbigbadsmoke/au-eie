@@ -29,7 +29,7 @@ app.use(session({
 mongoose.connect("mongodb://localhost:27017/coetDB", {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
 
-const {Student, CourseReg, courseItems, Result, resultItems} = require("./models/student");
+const {Student, CourseReg, courseItems, Result, resultItems, DisplayImg} = require("./models/student");
 const User = require("./models/user");
 const { actions } = require('admin-bro');
 
