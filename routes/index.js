@@ -80,12 +80,35 @@ app.route('/register')
 app.get("/portalHome", (req, res) => {
   res.render("portalHome");
 });
-  
-app.get("/editProfile", (req, res) => {
-  Student.find({}, () => {
-    res.render("editProfile", {firstname: Student.firstname});
-  })
-});
+
+app.route('/editProfile')
+  .get((req, res) => {
+    Student.find({}, () => {
+      res.render("editProfile", {firstname: Student.firstname});
+    })
+  }).post((req, res) => {
+    const matricNumber = req.body.matricNumber;
+    const firstname = req.body.firstname;
+    const middlename = req.body.middlename;
+    const lastname = req.body.lastname;
+    const dept = req.body.department;
+
+    if (req.file) {
+      const pathName = req.file.path;
+      console.log(pathname);
+
+      const displayImg = new DisplayImg({
+        matricNumber: matricNumber,
+        image: pathName
+      });
+    }
+    Student.findOneAndUpdate({matricNumber: matricNumber}, {$push: {'firstname': firstname, 'middlename': middlename,'lastname': lastname, 'department': dept}}, {new: true}, (err, foundStudent) => {
+      if (!err) {
+        res.redirect('/portalHome');
+      }
+    });
+
+  });
 
 app.route('/registerCourses')
   .get((req, res) => {
@@ -97,13 +120,13 @@ app.route('/registerCourses')
     const courseCode = req.body.courseCode;
     const courseTitle = req.body.courseTitle;
     const courseUnit = req.body.courseUnit;
-    Student.findOneAndUpdate({matricNumber: req.body.matricNumber}, {$push: {courseRegistered: {'code': courseCode, 'title': courseTitle, 'unit': courseUnit}}}, {new: true}, (err, foundUsers) => {
+    Student.findOneAndUpdate({matricNumber: req.body.matricNumber}, {$push: {courseRegistered: {'code': courseCode, 'title': courseTitle, 'unit': courseUnit}}}, {new: true}, (err, foundStudent) => {
       if (err) {
         console.log(err)
       } else {
         Student.findOne({matricNumber: matricNumber}, (err, foundStudent) => {
           if (!err){
-            res.render('registerCourses', {courseReg: courseReg});
+            res.render('registerCourses');
           }
         })
       }
