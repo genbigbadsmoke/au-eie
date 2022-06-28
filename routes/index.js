@@ -8,7 +8,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const Routes = express();
 
 
-const {Student, courseReg, CourseReg, Result, ProfileImg} = require("../models/student");
+const {Student, courseReg, CourseReg, Result} = require("../models/student");
 const User = require("../models/user");
 
 //passport
