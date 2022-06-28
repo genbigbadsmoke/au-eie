@@ -39,7 +39,7 @@ AdminBro.registerAdapter(AdminBroMongoose)
 const AdminBroOptions = {
   resources: [User, Student, CourseReg, DisplayImg],
   branding: {
-    logo: '../images/new_logo-2.png',
+    logo: '../images/logo/new_logo-2.png',
     companyName: 'College Of Engineering Technology',
     softwareBrothers: false,
   }
