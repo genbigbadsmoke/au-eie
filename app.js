@@ -29,15 +29,16 @@ app.use(session({
 mongoose.connect("mongodb://localhost:27017/coetDB", {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
 
-const {Student, CourseReg, courseItems, Result, resultItems, image} = require("./models/student");
+const {Student, CourseReg, courseItems, Result, resultItems} = require("./models/student");
 const User = require("./models/user");
+const {courses, firstSemester, secondSemester} =  require('./models/courses');
 const { actions } = require('admin-bro');
 
 
 //Admin Bro
 AdminBro.registerAdapter(AdminBroMongoose)
 const AdminBroOptions = {
-  resources: [User, Student, CourseReg, image],
+  resources: [User, Student, CourseReg, firstSemester, secondSemester],
   branding: {
     logo: '../images/logo/new_logo-2.png',
     companyName: 'College Of Engineering Technology',

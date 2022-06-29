@@ -1,16 +1,6 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require("passport-local-mongoose");
 
-const imgSchema = new mongoose.Schema({
-  matricNumber: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Student'
-  },
-  image: {
-    data: Buffer,
-    contentType: String
-  }
-});
 
 const studentCourseRegSchema = new mongoose.Schema ({
   code: {
@@ -79,9 +69,8 @@ StudentSchema.plugin(passportLocalMongoose);
 const Student = mongoose.model('Student', StudentSchema);
 const CourseReg = mongoose.model('CourseReg', studentCourseRegSchema);
 const Result = mongoose.model('Result', studentResultSchema);
-const image = mongoose.model('DisplayImg', imgSchema);
 
 // Definables
 let courseReg = [];
 
-module.exports = {Student, courseReg, CourseReg, Result, image};
+module.exports = {Student, courseReg, CourseReg, Result};

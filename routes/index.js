@@ -8,7 +8,8 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const Routes = express();
 
 
-const {Student, courseReg, CourseReg, Result, image} = require("../models/student");
+const {Student, courseReg, CourseReg, Result} = require("../models/student");
+const {courses, firstSemester, secondSemester} =  require('../models/courses');
 const User = require("../models/user");
 
 //passport
@@ -85,7 +86,7 @@ app.route('/editProfile')
     Student.find({}, () => {
       res.render("editProfile", {firstname: Student.firstname});
     })
-  }).post(upload.single('profileImg'), (req, res) => {
+  }).post((req, res) => {
     const matricNumber = req.body.matricNumber;
     const firstname = req.body.firstname;
     const middlename = req.body.middlename;
@@ -97,20 +98,6 @@ app.route('/editProfile')
         res.redirect('/portalHome');
       }
     });
-    let img = fs.readFileSync(req.file.path);
-    let encode_img = img.toString('base64');
-    let final_img = {
-      contentType: req.file.mimetype,
-      image: new Buffer(encode_img, 'base64')
-    };
-    image.create(final_img, (err, result) => {
-      if (!err) {
-        //console.log(result.img.Buffer);
-        console.log('Saved to database');
-        res.contentType(final_img.contentType);
-        res.send(final_img.image);
-      }
-    })
   }
 );
 
