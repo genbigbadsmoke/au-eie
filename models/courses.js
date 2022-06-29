@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+const Student =  require('./student');
 
 const coursesSchema = new mongoose.Schema({
   level: {
-    type: Number,
-    required: true
-},
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'level'
+  },
 courseCode: {
     type: String,
     required: true,
@@ -27,8 +28,31 @@ const secondSemesterSchema = new mongoose.Schema({
   course: [coursesSchema]
 });
 
+const levelSchema = new mongoose.Schema({
+  level: {
+    type: Number,
+    required: true
+  },
+  matricNumber: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Student',
+    required: true
+  }]
+})
+
+const viewCourseSchema = new mongoose.Schema({
+  level: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'level'
+  },
+  firstSemester: [firstSemsesterSchema],
+  secondSemester: [secondSemesterSchema]
+})
+
 const courses = mongoose.model('courses', coursesSchema);
 const firstSemester = mongoose.model('firstSemester', firstSemsesterSchema);
 const secondSemester = mongoose.model('secondSemester', secondSemesterSchema);
+const level = mongoose.model('level', levelSchema);
+const view = mongoose.model('view', viewCourseSchema)
 
-module.exports = {courses, firstSemester, secondSemester};
+module.exports = {courses, firstSemester, secondSemester, level, view};

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require("passport-local-mongoose");
+const level = require('./courses');
 
 
 const studentCourseRegSchema = new mongoose.Schema ({
@@ -55,12 +56,18 @@ const StudentSchema = new mongoose.Schema ({
     type: String
   },
   level: {
-    type: String
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'level'
   },
   password: {
     type: String
   },
-  courseRegistered: [studentCourseRegSchema],
+  courseRegistered: [
+    {
+      first: [studentCourseRegSchema],
+      second: [studentCourseRegSchema]
+    }
+  ],
   result: [studentResultSchema]
 });
 

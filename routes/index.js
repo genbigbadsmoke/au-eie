@@ -65,7 +65,7 @@ app.route('/register')
   .get((req, res) => {
     res.render("register");
   }).post((req, res) => {
-    Student.register({matricNumber: req.body.matricNumber, username: req.body.matricNumber, firstname: req.body.firstname, lastname: req.body.lastname, department: req.body.department, level: req.body.level}, req.body.password, function(err, user){
+    Student.register({matricNumber: req.body.matricNumber, username: req.body.matricNumber, firstname: req.body.firstname, middlename: req.body.middlename, lastname: req.body.lastname, department: req.body.department, level: req.body.level}, req.body.password, function(err, user){
       if (err) {
         console.log(err);
         res.redirect("/register");
@@ -108,20 +108,25 @@ app.route('/registerCourses')
     })
   }).post((req, res) => {
     const matricNumber = req.body.matricNumber;
+    const semester = req.body.semester;
     const courseCode = req.body.courseCode;
     const courseTitle = req.body.courseTitle;
     const courseUnit = req.body.courseUnit;
-    Student.findOneAndUpdate({matricNumber: req.body.matricNumber}, {$push: {courseRegistered: {'code': courseCode, 'title': courseTitle, 'unit': courseUnit}}}, {new: true}, (err, foundStudent) => {
-      if (err) {
-        console.log(err)
-      } else {
-        Student.findOne({matricNumber: matricNumber}, (err, foundStudent) => {
-          if (!err){
-            res.render('registerCourses');
-          }
-        })
-      }
-    });
+
+    if (semester === 'first' || semester === 'second') {
+      Student.findOneAndUpdate({matricNumber: req.body.matricNumber}, {$push: {courseRegistered: {'code': courseCode, 'title': courseTitle, 'unit': courseUnit}}}, {new: true}, (err, foundStudent) => {
+        if (err) {
+          console.log(err)
+        } else {
+          Student.findOne({matricNumber: matricNumber}, (err, foundStudent) => {
+            if (!err){
+              res.render('registerCourses');
+            }
+          })
+        }
+      });
+    }
+
     const courseReg = new CourseReg({
       code: courseCode,
       title: courseTitle,

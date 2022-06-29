@@ -31,14 +31,14 @@ mongoose.set("useCreateIndex", true);
 
 const {Student, CourseReg, courseItems, Result, resultItems} = require("./models/student");
 const User = require("./models/user");
-const {courses, firstSemester, secondSemester} =  require('./models/courses');
+const {courses, firstSemester, secondSemester, level} =  require('./models/courses');
 const { actions } = require('admin-bro');
 
 
 //Admin Bro
 AdminBro.registerAdapter(AdminBroMongoose)
 const AdminBroOptions = {
-  resources: [User, Student, CourseReg, firstSemester, secondSemester],
+  resources: [User, Student, CourseReg, level],
   branding: {
     logo: '../images/logo/new_logo-2.png',
     companyName: 'College Of Engineering Technology',
