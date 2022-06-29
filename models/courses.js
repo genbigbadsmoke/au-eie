@@ -43,7 +43,8 @@ const levelSchema = new mongoose.Schema({
 const viewCourseSchema = new mongoose.Schema({
   level: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'level'
+    ref: 'level',
+    required: true
   },
   firstSemester: [firstSemsesterSchema],
   secondSemester: [secondSemesterSchema]

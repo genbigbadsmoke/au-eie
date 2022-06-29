@@ -56,8 +56,7 @@ const StudentSchema = new mongoose.Schema ({
     type: String
   },
   level: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'level'
+    type: Number
   },
   password: {
     type: String

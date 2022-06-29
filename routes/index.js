@@ -9,7 +9,7 @@ const Routes = express();
 
 
 const {Student, courseReg, CourseReg, Result} = require("../models/student");
-const {courses, firstSemester, secondSemester} =  require('../models/courses');
+const {courses, view} =  require('../models/courses');
 const User = require("../models/user");
 
 //passport
