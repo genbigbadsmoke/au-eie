@@ -15,6 +15,10 @@ const studentCourseRegSchema = new mongoose.Schema ({
   unit: {
       type: Number,
       required: true
+  },
+  ownerId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
   }
 });
 
@@ -36,6 +40,10 @@ const studentResultSchema = new mongoose.Schema ({
   },
   cgpa: {
       type: String
+  },
+  ownerId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
   }
 });
 
@@ -67,7 +75,11 @@ const StudentSchema = new mongoose.Schema ({
       second: [studentCourseRegSchema]
     }
   ],
-  result: [studentResultSchema]
+  result: [studentResultSchema],
+  ownerId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
+  }
 });
 
 StudentSchema.plugin(passportLocalMongoose);

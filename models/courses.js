@@ -33,6 +33,10 @@ const levelSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  ownerId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
+  },
   matricNumber: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Student',
@@ -45,6 +49,10 @@ const viewCourseSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'level',
     required: true
+  },
+  ownerId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
   },
   firstSemester: [firstSemsesterSchema],
   secondSemester: [secondSemesterSchema]

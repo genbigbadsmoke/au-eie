@@ -12,6 +12,9 @@ const mongoose = require('mongoose');
 const passport = require("passport");
 const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require("passport-local-mongoose");
+
+AdminBro.registerAdapter(require('@admin-bro/mongoose'))
+
 global.app = express();
 
 //middleware
@@ -31,12 +34,18 @@ mongoose.set("useCreateIndex", true);
 const {Student, CourseReg, courseItems, Result, resultItems} = require("./models/student");
 const User = require("./models/user");
 const {courses, firstSemester, secondSemester, level, view} =  require('./models/courses');
-const { actions } = require('admin-bro');
 
+// RBAC functions
+const { canEdit } = ({ currentAdmin, record }) => {
+  return currentAdmin && (
+    currentAdmin.role === 'admin'
+    || currentAdmin._id === record.param('ownerId')
+  )
+}
+const canModifyUsers = ({ currentAdmin }) => currentAdmin && currentAdmin.role === 'admin'
 
 //Admin Bro
-AdminBro.registerAdapter(AdminBroMongoose)
-const AdminBroOptions = {
+const adminBro = new AdminBro({
   resources: [{
     resource: User,
     options: {
@@ -45,7 +54,7 @@ const AdminBroOptions = {
           isVisible: false,
         },
         password: {
-          type: 'String',
+          type: 'string',
           isVisible: {
             list: false, edit: true, filter: false, show: false,
           },
@@ -54,39 +63,61 @@ const AdminBroOptions = {
       actions: {
         new: {
           before: async (request) => {
-            if (request.payload.record.password) {
-              request.payload.record = {
-                ...request.payload.record,
-                encryptedPassword: await bcrypt.hash(request.payload.record, 10),
+            if(request.payload.password) {
+              request.payload = {
+                ...request.payload,
+                encryptedPassword: await bcrypt.hash(request.payload.password, 10),
                 password: undefined,
               }
             }
             return request
-          }
+          },
+        },
+        edit: { isAccessible: canModifyUsers },
+        delete: { isAccessible: canModifyUsers },
+        new: { isAccessible: canModifyUsers },
+      }
+    }
+  },{
+    resource: Student,
+    options: {
+      properties: {
+        ownerId: { isVisible: { edit: false, show: true, list: true, filter: true } }
+      },
+      actions: {
+        edit: { isAccessible: canEdit },
+        delete: { isAccessible: canEdit },
+        new: {
+          before: async (request, { currentAdmin }) => {
+            request.payload = {
+              ...request.payload,
+              ownerId: currentAdmin._id,
+            }
+            return request
+          },
         }
       }
     }
-  }, Student, CourseReg, level, view],
+  }, level, view],
   rootPath: '/admin',
   branding: {
     logo: '../images/logo/new_logo-2.png',
     companyName: 'College Of Engineering Technology',
     softwareBrothers: false,
   }
-}
-const adminBro = new AdminBro(AdminBroOptions)
+})
 const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
   authenticate: async (email, password) => {
     const user = await User.findOne({ email })
     if (user) {
-      const matched = await bcrypt.compare(password, user.encrypyedPassword)
+      const matched = await bcrypt.compare(password, user.encryptedPassword)
       if (matched) {
         return user
       }
     }
     return false
   },
-  cookiePassword: 'college-of-engineering-and-technology',
+  cookiePassword: 'some-secret-password-used-to-secure-cookie',
 })
 app.use(adminBro.options.rootPath, router)
 app.use(bodyParser.json())
