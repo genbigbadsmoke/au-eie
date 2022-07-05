@@ -14,7 +14,7 @@
                     <div class="row mt-2">
                         <div class="col-md-7 mx-auto">
                             <label class="labels">Level</label>
-                            <input type="text" class="form-control" placeholder="level" value="">
+                            <input type="text" class="form-control" name="level" placeholder="level" value="">
                         </div>
                     </div>
                     <div class="mt-5 text-center">
@@ -24,6 +24,12 @@
             </form>
             <div class="row mt-2">
                 <div class="col-md-3 mx-auto">
+                    <h4 class="text-right mx-auto">View Courses</h4>
+                    <ol>
+                        <%for (let i = 0; i < views.length; i++){%>
+                            <li><%= views[i].code %><p class="ol-p"><%= views[i].title %></p><p class="ol-p2"><%= views[i].unit %></p></li>
+                        <%}%>
+                    </ol>
                 </div>
             </div>
         </div>

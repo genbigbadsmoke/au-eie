@@ -15,27 +15,6 @@ const User = require("../models/user");
 //passport
 const auth = require('../auth/auth');
 
-//Image Upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './public/images/uploads')
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + Date.now())
-  }
-});
-const fileFilter=(req, file, cb)=>{
-  if(file.mimetype ==='image/jpeg' || file.mimetype ==='image/jpg' || file.mimetype ==='image/png'){
-      cb(null,true);
-  }else{
-      cb(null, false);
-  }
-}
-const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter
-});
-
 //Routes
 app.get("/", (req, res) => {
     res.render("home");
@@ -159,6 +138,14 @@ app.get("/result2", (req, res) => {
 
 app.get("/courses", (req, res) => {
   res.render("courses");
+}).post((req, res) => {
+  const level = req.body.level;
+
+  view.find({'level': level}, (err, foundView) => {
+    if (!err) {
+      res.render('courses', {views: foundView});
+    }
+  })
 });
   
 app.get("/logout", (req, res) => {
