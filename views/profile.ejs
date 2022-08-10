@@ -1,0 +1,30 @@
+<%- include('partials/header2') %>
+
+
+<div class="container rounded bg-white mt-5 mb-5" id="box">
+  <div class="row">
+      <div class="col-md-3 border-right">
+          <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+            </div>
+      </div>
+      <div class="d-flex flex-column align-items-center col-md-5 border-right p-3 py-5">
+        
+        <h1>Profile</h1>
+        <div class="row mt-2">
+            <ol>
+                <li>Matric Number: <%= student.matricNumber %></li>
+                <li>First Name: <%= student.firstname %></li>
+                <li>Middle Name: <%= student.middlename %></li>
+                <li>Last Name: <%= student.lastname %></li>
+                <li>Department: <%= student.department %></li>
+                <li>level: <%= student.level %></li>
+            </ol>
+        
+
+      </div>
+  </div>
+</div>
+
+
+
+<%- include('partials/footer') %>

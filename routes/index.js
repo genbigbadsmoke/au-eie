@@ -36,6 +36,7 @@ app.route('/login')
       passport.authenticate("local")(req, res, () => {
         res.redirect("/portalHome");
       });
+      console.log(req.user.id);
     }
   });
 });
@@ -60,21 +61,19 @@ app.get("/portalHome", (req, res) => {
   res.render("portalHome");
 });
 
-app.route('/editProfile')
+app.route('/viewProfile')
   .get((req, res) => {
-    Student.find({}, () => {
-      res.render("editProfile", {firstname: Student.firstname});
-    })
+    res.render("viewProfile" );
   }).post((req, res) => {
     const matricNumber = req.body.matricNumber;
-    const firstname = req.body.firstname;
-    const middlename = req.body.middlename;
-    const lastname = req.body.lastname;
-    const dept = req.body.department;
 
-    Student.findOneAndUpdate({matricNumber: matricNumber}, {$push: {'firstname': firstname, 'middlename': middlename,'lastname': lastname, 'department': dept}}, {new: true}, (err, foundStudent) => {
-      if (!err) {
-        res.redirect('/portalHome');
+    Student.findOne(matricNumber, (err, foundStudent) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundStudent) {
+          res.render('profile', {student: foundStudent});
+        }
       }
     });
   }
@@ -92,26 +91,24 @@ app.route('/registerCourses')
     const courseTitle = req.body.courseTitle;
     const courseUnit = req.body.courseUnit;
 
-    if (semester === 'first' || semester === 'second') {
-      Student.findOneAndUpdate({matricNumber: req.body.matricNumber}, {$push: {courseRegistered: {'code': courseCode, 'title': courseTitle, 'unit': courseUnit}}}, {new: true}, (err, foundStudent) => {
-        if (err) {
-          console.log(err)
-        } else {
-          Student.findOne({matricNumber: matricNumber}, (err, foundStudent) => {
-            if (!err){
-              res.render('registerCourses');
-            }
-          })
+    Student.findById(req.user.id, (err, foundStudent) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (foundStudent) {
+          foundStudent.courseRegistered = courseReg;
+          courseReg = new CourseReg({
+            semester: semester,
+            code: courseCode,
+            title: courseTitle,
+            unit: courseUnit
+          });
+          foundStudent.save();
         }
-      });
-    }
+      }
+    })
 
-    const courseReg = new CourseReg({
-      code: courseCode,
-      title: courseTitle,
-      unit: courseUnit
-    });
-    courseReg.save();
+
 });
 
 app.route('/result1')
@@ -120,20 +117,15 @@ app.route('/result1')
   }).post((req, res) => {
     const matricNumber = req.body.matricNumber;
     
-    Student.find({'matricNumber': {$ne: null}}, (err, foundUsers) => {
+    Student.findOne(matricNumber, (err, foundResult) => {
       if (err) {
         console.log(err);
       } else {
-        if (foundUsers) {
-          res.render('result2');
+        if (foundStudent) {
+          res.render('result2', {studentResult: foundResult});
         }
       }
     });
-});
-app.get("/result2", (req, res) => {
-  Result.find({}, (err, foundResult) => {
-    res.render('result2', {resultItems: foundResult});
-  });
 });
 
 app.get("/courses", (req, res) => {

@@ -6,7 +6,7 @@ const coursesSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'level'
   },
-courseCode: {
+  courseCode: {
     type: String,
     required: true,
   },

@@ -8,6 +8,9 @@ const studentCourseRegSchema = new mongoose.Schema ({
       type: String,
       required: true
   },
+  semester: {
+    type: String
+  },
   title: {
       type: String,
       required: true
@@ -69,12 +72,7 @@ const StudentSchema = new mongoose.Schema ({
   password: {
     type: String
   },
-  courseRegistered: [
-    {
-      first: [studentCourseRegSchema],
-      second: [studentCourseRegSchema]
-    }
-  ],
+  courseRegistered: [studentCourseRegSchema],
   result: [studentResultSchema],
   ownerId: {
     type: mongoose.Types.ObjectId,

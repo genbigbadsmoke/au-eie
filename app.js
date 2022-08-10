@@ -91,7 +91,7 @@ const adminBro = new AdminBro({
   }, level, view],
   rootPath: '/admin',
   branding: {
-    logo: '../images/logo/new_logo-2.png',
+    logo: '../images/logo/logo.png',
     companyName: 'College Of Engineering Technology',
     softwareBrothers: false,
   }

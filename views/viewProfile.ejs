@@ -1,0 +1,36 @@
+<%- include('partials/header2') %>
+
+
+<div class="container rounded bg-white mt-5 mb-5" id="box">
+  <div class="row">
+      <div class="col-md-3 border-right">
+          <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+            </div>
+      </div>
+      <div class="col-md-5 border-right">
+        <form action="/editProfile" method="post" enctype="multipart/form-data">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">View Profile</h4>
+                </div>
+               
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label class="labels">Matric Number</label>
+                        <input type="text" class="form-control" name="matricNumber">
+                    </div>
+                </div>
+                <div class="mt-5 text-center">
+                      <button class="btn btn-primary profile-button" type="submit">View Profile</button>
+                </div>
+            </div>
+        </form>
+
+        
+      </div>
+  </div>
+</div>
+</div>
+</div>
+
+<%- include('partials/footer') %>
