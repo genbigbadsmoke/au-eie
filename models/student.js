@@ -5,18 +5,18 @@ const level = require('./courses');
 
 const studentCourseRegSchema = new mongoose.Schema ({
   code: {
-      type: String,
+      type: Array,
       required: true
   },
   semester: {
     type: String
   },
   title: {
-      type: String,
+      type: Array,
       required: true
   },
   unit: {
-      type: Number,
+      type: Array,
       required: true
   },
   ownerId: {
@@ -47,6 +47,10 @@ const studentResultSchema = new mongoose.Schema ({
   ownerId: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
+  },
+  matricNumber: {
+    type: String,
+    ref: 'Student'
   }
 });
 
@@ -66,8 +70,23 @@ const StudentSchema = new mongoose.Schema ({
   department: {
     type: String
   },
+  gender: {
+    type: String
+  },
   level: {
     type: Number
+  },
+  religion: {
+    type: String
+  },
+  stateOfOrigin: {
+    type: String
+  },
+  lGAOfOrigin: {
+    type: String
+  },
+  nationality: {
+    type: String
   },
   password: {
     type: String
@@ -89,4 +108,4 @@ const Result = mongoose.model('Result', studentResultSchema);
 // Definables
 let courseReg = [];
 
-module.exports = {Student, courseReg, CourseReg, Result};
+module.exports = {Student, CourseReg, Result};

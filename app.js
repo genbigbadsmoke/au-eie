@@ -21,9 +21,9 @@ global.app = express();
 mongoose.connect("mongodb://localhost:27017/coetDB", {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
 
-const {Student, CourseReg, courseItems, Result, resultItems} = require("./models/student");
+const {Student, Result} = require("./models/student");
 const User = require("./models/user");
-const {courses, firstSemester, secondSemester, level, view} =  require('./models/courses');
+const {courses, firstSemester, secondSemester, level, view, department} =  require('./models/courses');
 
 // RBAC functions
 const { canEdit } = ({ currentAdmin, record }) => {
@@ -88,7 +88,7 @@ const adminBro = new AdminBro({
         }
       }
     }
-  }, level, view],
+  }, level, view, Result, department],
   rootPath: '/admin',
   branding: {
     logo: '../images/logo/logo.png',

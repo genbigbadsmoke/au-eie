@@ -20,12 +20,23 @@ const coursesSchema = new mongoose.Schema({
   }
 });
 
-const firstSemsesterSchema = new mongoose.Schema({
+const firstSemesterSchema = new mongoose.Schema({
   course: [coursesSchema]
 });
 
 const secondSemesterSchema = new mongoose.Schema({
   course: [coursesSchema]
+});
+
+const departmentSchema = new mongoose.Schema({
+  department: {
+    type: String
+  },
+  level: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'level',
+    required: true
+  }]
 });
 
 const levelSchema = new mongoose.Schema({
@@ -37,12 +48,17 @@ const levelSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: 'User',
   },
+  department: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Student',
+    required: true
+  },
   matricNumber: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Student',
     required: true
   }]
-})
+});
 
 const viewCourseSchema = new mongoose.Schema({
   level: {
@@ -50,18 +66,23 @@ const viewCourseSchema = new mongoose.Schema({
     ref: 'level',
     required: true
   },
+  department: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Student'
+  },
   ownerId: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
   },
-  firstSemester: [firstSemsesterSchema],
+  firstSemester: [firstSemesterSchema],
   secondSemester: [secondSemesterSchema]
-})
+});
 
 const courses = mongoose.model('courses', coursesSchema);
-const firstSemester = mongoose.model('firstSemester', firstSemsesterSchema);
-const secondSemester = mongoose.model('secondSemester', secondSemesterSchema);
+const first = mongoose.model('first', firstSemesterSchema);
+const second = mongoose.model('second', secondSemesterSchema);
 const level = mongoose.model('level', levelSchema);
-const view = mongoose.model('view', viewCourseSchema)
+const view = mongoose.model('view', viewCourseSchema);
+const department = mongoose.model('department', departmentSchema);
 
-module.exports = {courses, firstSemester, secondSemester, level, view};
+module.exports = {courses, first, second, level, view, department};

@@ -45,7 +45,7 @@ app.route('/register')
   .get((req, res) => {
     res.render("register");
   }).post((req, res) => {
-    Student.register({matricNumber: req.body.matricNumber, username: req.body.matricNumber, firstname: req.body.firstname, middlename: req.body.middlename, lastname: req.body.lastname, department: req.body.department, level: req.body.level}, req.body.password, function(err, user){
+    Student.register({matricNumber: req.body.matricNumber, username: req.body.matricNumber, firstname: req.body.firstname, middlename: req.body.middlename, lastname: req.body.lastname, department: req.body.department, level: req.body.level, religion: req.body.religion, stateOfOrigin: req.body.soa, lGA0fOrigin: req.body.loa, nationality: req.body.country}, req.body.password, function(err, user){
       if (err) {
         console.log(err);
         res.redirect("/register");
@@ -67,12 +67,12 @@ app.route('/viewProfile')
   }).post((req, res) => {
     const matricNumber = req.body.matricNumber;
 
-    Student.findOne(matricNumber, (err, foundStudent) => {
+    Student.findOne({matricNumber}, (err, foundStudent) => {
       if (err) {
         console.log(err);
       } else {
         if (foundStudent) {
-          res.render('profile', {student: foundStudent});
+          res.render('profile', {student: foundStudent, result: foundStudent.result});
         }
       }
     });
@@ -91,23 +91,22 @@ app.route('/registerCourses')
     const courseTitle = req.body.courseTitle;
     const courseUnit = req.body.courseUnit;
 
-    Student.findById(req.user.id, (err, foundStudent) => {
-      if (err) {
-        console.log(err);
-      } else {
+    Student.findOne({matricNumber}, (err, foundStudent) => {
+      if (!err) {
         if (foundStudent) {
-          foundStudent.courseRegistered = courseReg;
-          courseReg = new CourseReg({
-            semester: semester,
-            code: courseCode,
-            title: courseTitle,
-            unit: courseUnit
-          });
-          foundStudent.save();
-        }
-      }
-    })
+          const update = { $push: {courseRegistered: [{'semester': semester, 'code': courseCode, 'title': courseTitle, 'unit': courseUnit}]} };
+          
+          Student.updateOne({matricNumber: matricNumber}, update, (err, result) => {
+            console.log(err);
+            console.log(res);
 
+            res.redirect('registerCourses');
+          });
+        }
+      } else {
+        console.log(err);
+      }
+    });
 
 });
 
@@ -117,13 +116,11 @@ app.route('/result1')
   }).post((req, res) => {
     const matricNumber = req.body.matricNumber;
     
-    Student.findOne(matricNumber, (err, foundResult) => {
-      if (err) {
-        console.log(err);
+    Student.findOne({matricNumber}, (err, foundResult) => {
+      if (!err) {
+        res.render('result2', {student: foundResult, students: foundResult.result});
       } else {
-        if (foundStudent) {
-          res.render('result2', {studentResult: foundResult});
-        }
+        console.log(err);
       }
     });
 });

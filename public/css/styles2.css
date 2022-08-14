@@ -2,6 +2,7 @@
     color: #000;
 }
 
+
 body {
     background: #1ca04e;
 }
@@ -72,4 +73,28 @@ body {
 }
 li {
     list-style: none;
+}
+
+
+
+@media screen and (min-width: 900px) {
+    #dropdown03 {
+        display: none;
+    }
+
+    .d1, .d2,
+    .d3, .d4 {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 699px) {
+    #dropdown03 {
+        display: block;
+    }
+
+    .d1, .d2,
+    .d3, .d4 {
+        display: none;
+    }
 }

@@ -17,6 +17,8 @@ body {
 
 img {
   width: 250px;
+  position: absolute;
+  right: 15px;
 }
 
 .jumbotron {

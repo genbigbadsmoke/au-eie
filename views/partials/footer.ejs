@@ -1,4 +1,17 @@
-
-
 </body>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="bootstrap/js/jquery-slim.min.js"><\/script>')</script>
+
+<script type="text/javascript">
+    $('#addCourse-button').on('click', function() {
+        $('#courseform2').append('<div class="col-md-2"><label class="labels">Course Code</label><input type="text" class="form-control" placeholder="Course Code" name="courseCode" value=""></div><div class="col-md-7"><label class="labels">Course Title</label><input type="text" class="form-control" placeholder="Course Title" name="courseTitle" value=""></div><div class="col-md-3"><label class="labels">Unit</label><input type="text" class="form-control" value="" placeholder="Unit" name="courseUnit"></div>');
+    });
+</script>
+
+
+<script src="bootstrap/js/popper.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 </html>

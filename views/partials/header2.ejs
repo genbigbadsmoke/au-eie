@@ -13,48 +13,46 @@
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg fixed-top bg-dark navbar-dark">
-  <div class="container">
-    <a class="navbar-brand" href="/portalHome"
-      ><img
-        id="Achievers-Logo"
-        src="images/logo/logo.png"
-        alt="MDB Logo"
-        draggable="false"
-        height="30"
-    /></a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mx-auto align-items-center">
-        <li class="nav-item">
-          <a class="nav-link mx-2" href="/courses"><i class=""></i>Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link mx-2" href="/result1"><i class=""></i>Results</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link mx-2" href="/registerCourses"><i class=""></i>Register Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link mx-2" href="/viewProfile">Profile</a>
-        </li>
-        <li class="nav-item ms-3">
-          <a class="btn btn-light btn-rounded" href="/logout">logout</a>
-        </li>
-      </ul>
-    </div>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <a class="navbar-brand" href="/portalHome"
+    ><img
+      id="Achievers-Logo"
+      src="images/logo/logo.png"
+      alt="Achievers-Logo"
+      draggable="false"
+      height="30"
+  /></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbar">
+    <ul class="navbar-nav ms-auto align-items-center">
+      <li class="nav-item d1">
+        <a class="nav-link" href="/courses">Courses</a>
+      </li>
+      <li class="nav-item d2">
+        <a class="nav-link" href="/result1">Result</a>
+      </li>
+      <li class="nav-item d3">
+        <a class="nav-link" href="/registerCourses">Register Courses</a>
+      </li>
+      <li class="nav-item d4">
+        <a class="nav-link" href="/viewProfile">Profile</a>
+      </li>
+      <li class="nav-item dropdown mr-auto">
+        <a class="nav-link dropdown-toggle hidden" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown03">
+          <a class="dropdown-item" href="/courses">Courses</a>
+          <a class="dropdown-item" href="/result1">Results</a>
+          <a class="dropdown-item" href="/registerCourses">Register Courses</a>
+          <a class="dropdown-item" href="/viewProfile">Profile</a>
+        </div>
+      </li>
+    </ul>
   </div>
 </nav>
+
 <!-- Navbar -->
 
 

@@ -10,19 +10,28 @@
                 <div class="d-flex justify-content-between  align-items-center mb-3">
                     <h4 class="text-right mx-auto">View Result</h4>
                 </div>
-                <div class="row mt-2">
-                    <img src="images/new_logo-2.png" alt="">
-                    <ol>
-                        <% for (let i = 0; i < resultItems.length; i++){ %>
-                            <li><%= resultItems[i].courseCode %><p class="ol-p"><%= resultItems[i].courseTitle %></p><p class="ol-p2"><%= resultItems[i].courseGrade %></p></li>
-                        <% } %>
-                    </ol>
+                <div class="row mt-2 table-responsive">
+                    <img src="images/logo/logo.png" alt="Achievers-logo" class="align-items-center">
+                    <table class="table">
+                        <thead class="thead">
+                            <tr>
+                                <th scope="col">Achievers University</th>
+                            </tr>
+                            <tr>
+                                <td>Name: <%= student.firstname %> <%= student.lastname %></td>
+                                <td>Level: <%= student.level %></td>
+                                <td>Department: <%= student.department %></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                    <%= result %>
                 </div>
             </div>
         </div>
     </div>
-  </div>
-  </div>
   </div>
 
 <%- include('partials/footer') %>
