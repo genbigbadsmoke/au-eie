@@ -19,6 +19,9 @@ const auth = require('../auth/auth');
 app.get("/", (req, res) => {
     res.render("home");
 });
+app.get("/portalHome", (req, res) => {
+  res.render("portalHome");
+});
 
 app.route('/login')
   .get((req, res) => {
@@ -36,16 +39,14 @@ app.route('/login')
       passport.authenticate("local")(req, res, () => {
         res.redirect("/portalHome");
       });
-      console.log(req.user.id);
     }
   });
 });
-
 app.route('/register')
   .get((req, res) => {
     res.render("register");
   }).post((req, res) => {
-    Student.register({matricNumber: req.body.matricNumber, username: req.body.matricNumber, firstname: req.body.firstname, middlename: req.body.middlename, lastname: req.body.lastname, department: req.body.department, level: req.body.level, religion: req.body.religion, stateOfOrigin: req.body.soa, lGA0fOrigin: req.body.loa, nationality: req.body.country}, req.body.password, function(err, user){
+    Student.register({matricNumber: req.body.matricNumber, username: req.body.matricNumber, firstname: req.body.firstname, middlename: req.body.middlename, lastname: req.body.lastname, department: req.body.department, level: req.body.level, religion: req.body.religion, stateOfOrigin: req.body.soa, lGA0fOrigin: req.body.loa, nationality: req.body.country, number: req.body.number, gender: req.body.gender}, req.body.password, function(err, user){
       if (err) {
         console.log(err);
         res.redirect("/register");
@@ -57,9 +58,7 @@ app.route('/register')
     });
 });
 
-app.get("/portalHome", (req, res) => {
-  res.render("portalHome");
-});
+
 
 app.route('/viewProfile')
   .get((req, res) => {
@@ -67,13 +66,11 @@ app.route('/viewProfile')
   }).post((req, res) => {
     const matricNumber = req.body.matricNumber;
 
-    Student.findOne({matricNumber}, (err, foundStudent) => {
+    Student.findOne(matricNumber, (err, data) => {
       if (err) {
         console.log(err);
       } else {
-        if (foundStudent) {
-          res.render('profile', {student: foundStudent, result: foundStudent.result});
-        }
+        res.render('profile', {student: data})
       }
     });
   }
@@ -125,17 +122,20 @@ app.route('/result1')
     });
 });
 
-app.get("/courses", (req, res) => {
-  res.render("courses");
-}).post((req, res) => {
-  const level = req.body.level;
-
-  view.find({'level': level}, (err, foundView) => {
-    if (!err) {
-      res.render('courses', {views: foundView});
-    }
+app.route('/courses')
+  .get((req, res) => {
+    res.render('courses');
+  }).post((req, res) => {
+    const level = req.body.level;
+    view.findOne({level}, (err, data) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(data)
+        res.render('courses2', {view: data})
+      }
+    });
   })
-});
   
 app.get("/logout", (req, res) => {
   req.logout();

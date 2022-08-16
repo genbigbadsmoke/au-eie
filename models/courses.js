@@ -62,13 +62,8 @@ const levelSchema = new mongoose.Schema({
 
 const viewCourseSchema = new mongoose.Schema({
   level: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'level',
+    type: Number,
     required: true
-  },
-  department: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Student'
   },
   ownerId: {
     type: mongoose.Types.ObjectId,

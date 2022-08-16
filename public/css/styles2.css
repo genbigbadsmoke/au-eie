@@ -75,6 +75,13 @@ li {
     list-style: none;
 }
 
+.navbar-brand {
+    left: 40px;
+}
+
+#dropdown03 {
+    display: none;
+}
 
 
 @media screen and (min-width: 900px) {
@@ -90,11 +97,6 @@ li {
 
 @media screen and (max-width: 699px) {
     #dropdown03 {
-        display: block;
-    }
-
-    .d1, .d2,
-    .d3, .d4 {
         display: none;
     }
 }

@@ -47,34 +47,41 @@ const studentResultSchema = new mongoose.Schema ({
   ownerId: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
-  },
-  matricNumber: {
-    type: String,
-    ref: 'Student'
   }
 });
 
 const StudentSchema = new mongoose.Schema ({
   matricNumber: {
     type: String,
+    required: true
   },
   firstname: {
-    type: String
+    type: String,
+    required: true
   },
   middlename: {
-    type: String
+    type: String,
+    required: true
   },
   lastname: {
-    type: String
+    type: String,
+    required: true
   },
   department: {
-    type: String
+    type: String,
+    required: true
   },
   gender: {
-    type: String
+    type: String,
+    required: true
+  },
+  number: {
+    type: Number,
+    required: true
   },
   level: {
-    type: Number
+    type: Number,
+    required: true
   },
   religion: {
     type: String

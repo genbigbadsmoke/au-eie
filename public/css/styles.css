@@ -18,7 +18,8 @@ body {
 img {
   width: 250px;
   position: absolute;
-  right: 15px;
+  top: 85px;
+  left: 550px;
 }
 
 .jumbotron {

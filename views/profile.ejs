@@ -3,24 +3,58 @@
 
 <div class="container rounded bg-white mt-5 mb-5" id="box">
   <div class="row">
-      <div class="col-md-3 border-right">
+      <div class="col-md-2 border-left">
           <div class="d-flex flex-column align-items-center text-center p-3 py-5">
             </div>
       </div>
-      <div class="d-flex flex-column align-items-center col-md-5 border-right p-3 py-5">
+      <div class="d-flex flex-column align-items-left col-md-10 border-right p-3 py-5">
         
         <h1>Profile</h1>
         <div class="row mt-2">
-            <ol>
-                <li>Matric Number: <%= student.matricNumber %></li>
-                <li>First Name: <%= student.firstname %></li>
-                <li>Middle Name: <%= student.middlename %></li>
-                <li>Last Name: <%= student.lastname %></li>
-                <li>Department: <%= student.department %></li>
-                <li>level: <%= student.level %></li>
-            </ol>
-        
-
+          <div class="col-md-6">
+            <ul class="personal-info">
+              <li>
+                  <span class="title">Name:</span>
+                  <span class="text"><%= student.firstname %> <%= student.middlename %> <%= student.lastname %></span>
+              </li>
+              <li>
+                  <span class="title">Department:</span>
+                  <span class="text"><%= student.department %></span>
+              </li>
+              <li>
+                  <span class="title">Matric Number:</span>
+                  <span class="text"><%= student.matricNumber %></span>
+              </li>
+              <li>
+                  <span class="title">Level:</span>
+                  <span class="text"><%= student.level %></span>
+              </li>
+              <li>
+                  <span class="title">Gender:</span>
+                  <span class="text"><%= student.gender %></span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul class="personal-info">
+              <li>
+                  <span class="title">Phone:</span>
+                  <span class="text"><%= student.number %></span>
+              </li>
+              <li>
+                  <span class="title">Email:</span>
+                  <span class="text"><a href="#"><%= student.email %></a></span>
+              </li>
+              <li>
+                  <span class="title">Birthday:</span>
+                  <span class="text"><%= student.dob %></span>
+              </li>
+              <li>
+                  <span class="title">Address:</span>
+                  <span class="text"><%= student.homeaddr %></span>
+              </li>
+            </ul>
+          </div>      
       </div>
   </div>
 </div>

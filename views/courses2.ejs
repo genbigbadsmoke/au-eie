@@ -8,7 +8,7 @@
         <div class="col-md-7 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between  align-items-center mb-3">
-                    <h4 class="text-right mx-auto">View Result</h4>
+                    <h4 class="text-right mx-auto">View Courses</h4>
                 </div>
                 <div class="row mt-2 table-responsive">
                     <img src="images/logo/logo.png" alt="Achievers-logo" class="align-items-center">
@@ -18,20 +18,18 @@
                                 <th scope="col">Achievers University</th>
                             </tr>
                             <tr>
-                                <td>Name: <%= student.firstname %> <%= student.lastname %></td>
-                                <td>Level: <%= student.level %></td>
-                                <td>Department: <%= student.department %></td>
+
                             </tr>
                         </thead>
                         <tbody>
                             <tr></tr>
                         </tbody>
                     </table>
-                    <%= students %>
+                    <%= view %>
                 </div>
             </div>
         </div>
     </div>
-  </div>
+</div>
 
 <%- include('partials/footer') %>

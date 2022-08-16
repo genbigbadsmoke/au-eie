@@ -34,6 +34,17 @@ const { canEdit } = ({ currentAdmin, record }) => {
 }
 const canModifyUsers = ({ currentAdmin }) => currentAdmin && currentAdmin.role === 'admin'
 
+const locale = {
+  translations: {
+    labels: {
+      loginWelcome: 'E.I.E',
+    },
+    messages: {
+      loginWelcome: 'Admin Panel for the Electrical & Informations Engineering Department, College of Engineering and Technology',
+    },
+  },
+};
+
 //Admin Bro
 const adminBro = new AdminBro({
   resources: [{
@@ -88,8 +99,9 @@ const adminBro = new AdminBro({
         }
       }
     }
-  }, level, view, Result, department],
+  }, level, view, courses, department],
   rootPath: '/admin',
+  locale,
   branding: {
     logo: '../images/logo/logo.png',
     companyName: 'College Of Engineering Technology',
@@ -116,9 +128,7 @@ app.use(bodyParser.json())
 //middleware
 app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
   secret: "College of Engineering",
