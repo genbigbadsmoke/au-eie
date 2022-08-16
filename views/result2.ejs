@@ -24,10 +24,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr></tr>
+                            <% for (i = 0; i < students.length; i++) { %>
+                                <tr>
+                                    <td><%= students[i].courseCode %></td>
+                                    <td><%= students[i].courseTitle %></td>
+                                    <td><%= students[i].courseGrade %></td>
+                                </tr>
+                            <% } %>
                         </tbody>
                     </table>
-                    <%= students %>
+                    <% for (i = 0; i < students.length; i++) { %>
+                        <% if (students[i].gpa) { %>
+                            <span>GPA: <%= students[i].gpa %></span>
+                            <span>CGPA: <%= students[i].cgpa %></span> 
+                        <% } %>   
+                    <% } %>                    
                 </div>
             </div>
         </div>

@@ -27,16 +27,13 @@ const studentCourseRegSchema = new mongoose.Schema ({
 
 const studentResultSchema = new mongoose.Schema ({
   courseCode: {
-      type: String,
-      required: true
+      type: String
   },
   courseTitle: {
-      type: String,
-      required: true
+      type: String
   },
   courseGrade: {
-      type: String,
-      required: true
+      type: String
   },
   gpa: {
       type: String
@@ -75,8 +72,20 @@ const StudentSchema = new mongoose.Schema ({
     type: String,
     required: true
   },
+  homeaddr: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
   number: {
     type: Number,
+    required: true
+  },
+  dob: {
+    type: String,
     required: true
   },
   level: {

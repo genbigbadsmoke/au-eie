@@ -1,8 +1,8 @@
 //jshint esversion:6
 require('dotenv').config();
 const AdminBro = require('admin-bro')
-const AdminBroMongoose = require('@admin-bro/mongoose')
-const AdminBroExpress = require('@admin-bro/express')
+const AdminBroMongoose = require('@admin-bro/mongoose');
+const AdminBroExpress = require('@admin-bro/express');
 const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
@@ -15,10 +15,10 @@ const passportLocalMongoose = require("passport-local-mongoose");
 
 AdminBro.registerAdapter(require('@admin-bro/mongoose'))
 
-const app = express();
+global.app = express();
 
 //mongoose connection
-mongoose.connect("mongodb+srv://eieportal:smokeSZN1234@cluster0.sokb7s7.mongodb.net/coetDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost:27017/coetDB", {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
 
 const {Student, Result} = require("./models/student");

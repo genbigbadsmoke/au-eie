@@ -22,7 +22,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr></tr>
+                            <% for (i = 0; i < students.length; i++) { %>
+                                <tr>
+                                    <td><%= view[i].courseCode %></td>
+                                    <td><%= view[i].courseTitle %></td>
+                                    <td><%= view[i].courseGrade %></td>
+                                </tr>
+                            <% } %>
                         </tbody>
                     </table>
                     <%= view %>
