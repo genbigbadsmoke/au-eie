@@ -15,10 +15,10 @@ const passportLocalMongoose = require("passport-local-mongoose");
 
 AdminBro.registerAdapter(require('@admin-bro/mongoose'))
 
-global.app = express();
+const app = express();
 
 //mongoose connection
-mongoose.connect("mongodb://localhost:27017/coetDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://eieportal:smokeSZN1234@cluster0.sokb7s7.mongodb.net/coetDB", {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
 
 const {Student, Result} = require("./models/student");
@@ -148,3 +148,5 @@ const Routes = require('./routes/index');
 app.listen(8080, function() {
   console.log("Server started on port 8080.");
 });
+
+module.exports = app;
