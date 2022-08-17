@@ -14,22 +14,20 @@ const LocalStrategy = require('passport-local');
 const passportLocalMongoose = require("passport-local-mongoose");
 
 AdminBro.registerAdapter(require('@admin-bro/mongoose'))
-
-global.app = express();
+const app = express();
 
 //mongoose connection
 mongoose.connect("mongodb://localhost:27017/coetDB", {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set("useCreateIndex", true);
 
-const {Student, Result} = require("./models/student");
+const {Student, courseReg, Result} = require("./models/student");
 const User = require("./models/user");
-const {courses, firstSemester, secondSemester, level, view, department} =  require('./models/courses');
+const {level, view, department} =  require('./models/courses');
 
 // RBAC functions
 const { canEdit } = ({ currentAdmin, record }) => {
   return currentAdmin && (
     currentAdmin.role === 'admin'
-    || currentAdmin._id === record.param('ownerId')
   )
 }
 const canModifyUsers = ({ currentAdmin }) => currentAdmin && currentAdmin.role === 'admin'
@@ -99,7 +97,7 @@ const adminBro = new AdminBro({
         }
       }
     }
-  }, level, view, courses, department],
+  }, level, view, department],
   rootPath: '/admin',
   locale,
   branding: {
@@ -140,13 +138,159 @@ app.use(session({
 
 
 //passport
-const auth = require('./auth/auth');
+app.use(passport.initialize());
+app.use(passport.session());
 
-const Routes = require('./routes/index');
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  Student.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
+
+
+passport.use(new LocalStrategy({
+  usernameField: 'matricNumber',
+  passwordField: 'password'
+  },
+  Student.authenticate()
+));
+
+
+// Routes
+
+app.get("/", (req, res) => {
+  res.render("home");
+});
+app.get("/portalHome", (req, res) => {
+res.render("portalHome");
+});
+
+app.route('/login')
+.get((req, res) => {
+  res.render("login");
+}).post(function(req, res){
+
+const student = new Student({
+  matricNumber: req.body.matricNumber,
+  password: req.body.password
+});
+req.login(student, function(err){
+  if (err) {
+    console.log(err);
+  } else {
+    passport.authenticate("local")(req, res, () => {
+      res.redirect("/portalHome");
+    });
+  }
+});
+});
+app.route('/register')
+.get((req, res) => {
+  res.render("register");
+}).post((req, res) => {
+  Student.register({matricNumber: req.body.matricNumber, username: req.body.matricNumber, firstname: req.body.firstname, middlename: req.body.middlename, lastname: req.body.lastname, department: req.body.department, level: req.body.level, religion: req.body.religion, stateOfOrigin: req.body.soa, lGA0fOrigin: req.body.loa, nationality: req.body.country, number: req.body.number, gender: req.body.gender}, req.body.password, function(err, user){
+    if (err) {
+      console.log(err);
+      res.redirect("/register");
+    } else {
+      passport.authenticate("local")(req, res, function(){
+        res.redirect("/portalHome");
+      });
+    }
+  });
+});
+
+
+
+app.route('/viewProfile')
+.get((req, res) => {
+  res.render("viewProfile" );
+}).post((req, res) => {
+  const matricNumber = req.body.matricNumber;
+
+  Student.findOne(matricNumber, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('profile', {student: data})
+    }
+  });
+}
+);
+
+app.route('/registerCourses')
+.get((req, res) => {
+  Student.find({}, (err, foundStudent) => {
+    res.render("registerCourses", {courseReg: courseReg});
+  })
+}).post((req, res) => {
+  const matricNumber = req.body.matricNumber;
+  const semester = req.body.semester;
+  const courseCode = req.body.courseCode;
+  const courseTitle = req.body.courseTitle;
+  const courseUnit = req.body.courseUnit;
+
+  Student.findOne({matricNumber}, (err, foundStudent) => {
+    if (!err) {
+      if (foundStudent) {
+        const update = { $push: {courseRegistered: [{'semester': semester, 'code': courseCode, 'title': courseTitle, 'unit': courseUnit}]} };
+        
+        Student.updateOne({matricNumber: matricNumber}, update, (err, result) => {
+          console.log(err);
+          console.log(res);
+
+          res.redirect('registerCourses');
+        });
+      }
+    } else {
+      console.log(err);
+    }
+  });
+
+});
+
+app.route('/result1')
+.get((req, res) => {
+  res.render("result1");
+}).post((req, res) => {
+  const matricNumber = req.body.matricNumber;
+  
+  Student.findOne({matricNumber}, (err, foundResult) => {
+    if (!err) {
+      res.render('result2', {student: foundResult, students: foundResult.result});
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.route('/courses')
+.get((req, res) => {
+  res.render('courses');
+}).post((req, res) => {
+  const level = req.body.level;
+  view.findOne({level}, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(data)
+      res.render('courses2', {view: data.firstSemester, views: data.secondSemester})
+    }
+  });
+})
+
+app.get("/logout", (req, res) => {
+req.logout();
+res.redirect("/");
+});
 
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 3000;
+  port = 8080;
 }
 
 app.listen(port, function() {

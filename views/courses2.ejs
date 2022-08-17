@@ -18,11 +18,13 @@
                                 <th scope="col">Achievers University</th>
                             </tr>
                             <tr>
-
+                                <td>Course Code</td>
+                                <td>Course Title</td>
+                                <td>Course Unit</td>
                             </tr>
                         </thead>
                         <tbody>
-                            <% for (i = 0; i < students.length; i++) { %>
+                            <% for (i = 0; i < view.length; i++) { %>
                                 <tr>
                                     <td><%= view[i].courseCode %></td>
                                     <td><%= view[i].courseTitle %></td>
